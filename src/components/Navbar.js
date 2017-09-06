@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LoginForm from './LoginForm';
+//import LoginForm from './LoginForm';
 
 class Navbar extends Component {
 
@@ -19,8 +19,13 @@ class Navbar extends Component {
 
   render(){
 
-    const showLoginInfo = this.state.showLoginInfo ? <div className="my-2 my-lg-0">
-      <a className="nav-link" href="http://data">Logga ut</a></div> : '';
+    // Destructuring so we don't need to write this.state all the time
+    let {loginForm, showLoginInfo} = this.state;
+
+    showLoginInfo = showLoginInfo ? 
+      <div className="my-2 my-lg-0">
+        <a className="nav-link" href="http://data">Logga ut</a>
+      </div> : '';
 
     return(
       <div>

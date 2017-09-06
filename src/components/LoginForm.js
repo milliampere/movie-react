@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Button from './Button';
+import makePrimary from './makePrimary';
 
 class LoginForm extends Component{
 
@@ -6,7 +8,13 @@ class LoginForm extends Component{
     username: '',
     password: '', 
     userLoggedIn: false,
-    error: false
+    error: false,
+    passwordError: false,
+    usernameError: false,
+    formErrors: {username: '', password: ''},
+    usernameValid: false,
+    passwordValid: false,
+    formValid: false
   }
 
   onChange = (e) => {
@@ -17,22 +25,45 @@ class LoginForm extends Component{
   onSubmit = (e) => {
     e.preventDefault();
     if(this.state.username && this.state.password){
-      console.log(this.state.username, this.state.password);
-      this.setState({userLoggedIn: true});
-      this.setState({error: false});
+      if(this.state.username.length > 8){
+        console.log(this.state.username, this.state.password);
+        this.setState({userLoggedIn: true});
+        this.setState({error: false});
+      }
+      else{
+        console.log("För kort användarnamn");
+        this.setState({usernameError: true});
+      }
+    }
+
+    else if(this.state.username && !this.state.password){
+      this.setState({passwordError: true});
+      console.log("Du måste skriva lösenord.");
     }
     else{
       this.setState({error: true});
     }
+
+    this.props.onSubmitFromAbove(this.state.username);
+
   }
 
   render(){
+
+    // Komponera med HOC
+    const PrimaryButton = makePrimary(Button);
+
     const errorMessage = this.state.error ? <p>Error</p> : '';
     const hasError = this.state.error ? 'has-danger' : '';
+    const passwordErrorMessage = this.state.passwordError ? <div className="form-control-feedback">Skriv in lösenord</div> : '';
+    const passwordError = this.state.passwordError ? 'has-danger' : '';
+    const usernameErrorMessage = this.state.usernameError ? <div className="form-control-feedback">Skriv in användarnamn</div> : '';
+    const usernameError = this.state.usernameError ? 'has-danger' : '';
+
     return(
       <div style={{maxWidth: "50%", margin: "5rem auto"}}>
         <form onSubmit={this.onSubmit}>
-          <div className={`form-group ${hasError}`}>
+          <div className={`form-group ${usernameError}`}>
             <label htmlFor="username"></label>
             <input 
               type="text" 
@@ -41,9 +72,10 @@ class LoginForm extends Component{
               onChange={this.onChange}
               value={this.state.username} 
               placeholder="Användarnamn" />
-              { this.state.error && <div className="form-control-feedback">F</div> }
+              { this.state.usernameError && <div className="form-control-feedback">Skriv användarnamn</div> }
+              { usernameErrorMessage }
           </div>
-          <div className={`form-group ${hasError}`}>
+          <div className={`form-group ${passwordError}`}>
             <label htmlFor="password"></label>
             <input 
               type="password" 
@@ -52,12 +84,14 @@ class LoginForm extends Component{
               onChange={this.onChange} 
               value={this.state.password} 
               placeholder="Lösenord" />
-              { errorMessage }
+              { passwordErrorMessage }
           </div>
           <input type="submit" 
             className="btn"
             value="Logga in" />
         </form>
+        { /* Komponera med HOC*/ }
+        { /* <PrimaryButton title="Click me!" /> */ }
       </div>
     );
   }

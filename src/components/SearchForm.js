@@ -29,6 +29,7 @@ class SearchForm extends Component{
   }
 
   render(){
+    // Destructuring so we can write allMovies instead of this.state.allMovies
     const { allMovies, searchTerm } = this.state;
 
     let moviesToList = searchTerm ? allMovies.filter((movie) => movie.title.toLowerCase().includes(searchTerm.toLowerCase())) : [];

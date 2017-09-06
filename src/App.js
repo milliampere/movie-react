@@ -6,7 +6,7 @@ import Button from './components/Button';
 import Card from './components/Card';
 import Row from './components/Row';
 //import Input from './components/Input';
-import LoginForm from './components/LoginForm';
+//import LoginForm from './components/LoginForm';
 import SearchForm from './components/SearchForm';
 import SelectField from './components/SelectField';
 
@@ -17,8 +17,7 @@ class App extends Component {
     moviesByGenre: [],
     genre: '', 
     searchTerm: '',
-    showHeader: true, 
-    showLoginForm: true, 
+    //showHeader: true,  
     showPosters: true, 
     test: "Test",
     username: '' 
@@ -59,6 +58,11 @@ class App extends Component {
   onChangeCheck = (e) => {
     this.setState({ [e.target.name] : e.target.checked });
   }
+
+  onClick = (valueFromButton) => {
+    console.log("hej");
+    //this.setState({ title : title });
+  }
   
   render() {
     const { genre, moviesByGenre, allMovies, searchTerm, showPosters } = this.state;
@@ -67,43 +71,28 @@ class App extends Component {
     moviesToRender = searchTerm ? moviesToRender.filter(movie => movie.title.includes(searchTerm)) : moviesToRender;
 
     moviesToRender = moviesToRender.map((movie, index) => 
-      <Card key={index} movie={movie} showPosters={showPosters}></Card>
+      <Card key={index} movie={movie} showPosters={showPosters} onClick={this.onClick}></Card>
     );
 
-    const showHeader = this.state.showHeader ? <header><Navbar /></header> : '';
+    //const showHeader = this.state.showHeader ? <header><Navbar /></header> : '';
     //const showLoginForm = this.state.showLoginForm ? <div><LoginForm /></div> : '';
-
-    // Tillstånd = state
-    var tillstand;
-    tillstand = {
-      filmer: ["Alfons", "Emil i Lönneberga"],
-      filtreradeFilmer: ["Filtrerad"],
-      inloggad: true
-    };
-
-    // Destructuring  const {variabel, variabel2} = this.state;
-    // Behöver ej vara i samma ordning men ska heta samma. 
-    // Vi kan skapa ny variabler med property: newVar, exempel filmer: film
-    const {filmer: film, inloggad, filtreradeFilmer} = tillstand;
-
-    console.log(film);  // ["Alfons", "Emil i Lönneberga"]
-    console.log(filtreradeFilmer); ["Filtrerad"]
-    console.log(inloggad); // true
 
     return (
       <div className="App">
 
         { /* JSX don't render false, null, undefined or true. This can be useful to conditionally render React elements. 
         https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored Fråga! */ }
-        {<Navbar /> && showHeader}
+        { /* <Navbar showLoginForm={this.state.showLoginForm} /> && showHeader */}
 
-        {this.state.showLoginForm ? <div><LoginForm onSubmitFromAbove={this.onSubmit}/></div> : ''}
+        <Navbar />
+
+        { /* this.state.showLoginForm ? <div><LoginForm onSubmitFromAbove={this.onSubmit}/></div> : '' */ }
         { /* <LoginForm onSubmitFromAbove={this.onSubmit} /> */ }
 
         {this.state.username && <p>Ditt username: {this.state.username}</p>}
 
-        <Button primary title="Hej" />
-        
+        <Button primary title="Send state" onClick={this.onClick}/>
+        {this.state.value && <p>State skickat från Button-komponent: {this.state.value}</p>}
 
         <SearchForm />
 
@@ -111,23 +100,23 @@ class App extends Component {
           onChange={this.filterByGenre} 
           value={genre} />
 
-      <input 
+{/*       <input 
         type="checkbox" 
         onChange={this.onChangeCheck} 
         name="showHeader" 
         value={this.state.checked}
         defaultChecked="true"
         />
-        <label htmlFor="showHeader">Visa header</label>
+        <label htmlFor="showHeader">Visa header</label> */}
 
-        <input 
+{/*         <input 
         type="checkbox" 
         onChange={this.onChangeCheck} 
         name="showLoginForm" 
         value={this.state.checked}
         defaultChecked="true"
         />
-        <label htmlFor="showLoginForm">Visa LoginForm</label>
+        <label htmlFor="showLoginForm">Visa LoginForm</label> */}
 
         <input 
         type="checkbox" 
@@ -140,8 +129,12 @@ class App extends Component {
 
         <Content>
           <Row>
-            <Title type="h1" text="Hej" />
-            <Title type="h2">Hej</Title>
+{/*             <Title type="h1" text="Hej" />
+            <Title type="h2">Hej</Title> */}
+{/*             <Button primary title="Primary" />
+            <Button secondary title="Secondary" />
+            <Button success title="Success" />
+            <Button link title="Link" /> */}
           </Row>
           <Row>
             {moviesToRender}
@@ -157,7 +150,7 @@ class App extends Component {
 // variabler vi använder kan vi byta 
 // Vi kan använda switch, kanske inte bästa lösningen men en lösning
 // Ska vi använda text eller children för texten?
-function Title({type, text, children}){
+/* function Title({type, text, children}){
   switch(type){
     case "h1":
       return <h1>{text}</h1>;
@@ -169,7 +162,7 @@ function Title({type, text, children}){
       return <p>Hello</p>;
       break;
   }
-}
+} */
 
 export default App;
 

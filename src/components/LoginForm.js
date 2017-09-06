@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Button from './Button';
-import makePrimary from './makePrimary';
+//import Button from './Button';
+//import makePrimary from './makePrimary';
 
 class LoginForm extends Component{
 
@@ -51,10 +51,10 @@ class LoginForm extends Component{
   render(){
 
     // Komponera med HOC
-    const PrimaryButton = makePrimary(Button);
+    //const PrimaryButton = makePrimary(Button);
 
-    const errorMessage = this.state.error ? <p>Error</p> : '';
-    const hasError = this.state.error ? 'has-danger' : '';
+    //const errorMessage = this.state.error ? <p>Error</p> : '';
+    //const hasError = this.state.error ? 'has-danger' : '';
     const passwordErrorMessage = this.state.passwordError ? <div className="form-control-feedback">Skriv in lösenord</div> : '';
     const passwordError = this.state.passwordError ? 'has-danger' : '';
     const usernameErrorMessage = this.state.usernameError ? <div className="form-control-feedback">Skriv in användarnamn</div> : '';

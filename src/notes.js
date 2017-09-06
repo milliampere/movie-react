@@ -1,3 +1,27 @@
+    // Tillstånd = state
+    var tillstand;
+    tillstand = {
+      filmer: ["Alfons", "Emil i Lönneberga"],
+      filtreradeFilmer: ["Filtrerad"],
+      inloggad: true
+    };
+
+    // Destructuring  const {variabel, variabel2} = this.state;
+    // Behöver ej vara i samma ordning men ska heta samma. 
+    // Vi kan skapa ny variabler med property: newVar, exempel filmer: film
+    const {filmer: film, inloggad, filtreradeFilmer} = tillstand;
+
+    console.log(film);  // ["Alfons", "Emil i Lönneberga"]
+    console.log(filtreradeFilmer); ["Filtrerad"]
+    console.log(inloggad); // true
+
+
+
+
+
+
+
+
 import React, { Component } from 'react';
 import './styles/App.css';
 import Content from './components/Content';

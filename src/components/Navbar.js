@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-//import LoginForm from './LoginForm';
+import LoginForm from './LoginForm';
 
+// Change to function?
 class Navbar extends Component {
 
   state = {
-    loginForm: false,
-    showLoginInfo: false
+    showLoginForm: false
   }
 
   onClick = (e) => {
@@ -17,15 +17,25 @@ class Navbar extends Component {
     }
   }
 
+  onChangeCheck = e => {
+    this.setState({ [e.target.name] : e.target.checked });
+  }
+
   render(){
 
-    // Destructuring so we don't need to write this.state all the time
-    let {loginForm, showLoginInfo} = this.state;
-
-    showLoginInfo = showLoginInfo ? 
+/*     const showLoginInfo = showLoginInfo ? 
       <div className="my-2 my-lg-0">
         <a className="nav-link" href="http://data">Logga ut</a>
-      </div> : '';
+      </div> : ''; */
+
+    
+    const showLoginFormLink = <div><input 
+      type="checkbox" 
+      onChange={this.props.onChangeCheck} 
+      name="showLoginForm" 
+      value={this.state.checked}
+      defaultChecked="false"
+      /> <label htmlFor="showLoginForm">Logga in</label></div>;
 
     return(
       <div>
@@ -41,18 +51,17 @@ class Navbar extends Component {
                 <a className="nav-link" href="http://localhost:3000/">All movies <span className="sr-only">(current)</span></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="login">Login</a>
+                {showLoginFormLink}
               </li>
             </ul>
             <form className="form-inline my-2 my-lg-0">
               <input className="form-control mr-sm-2" type="text" placeholder="Search" />
               <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            {showLoginInfo}
           </div>
           
         </nav>
-        
+        <div>{this.state.showLoginForm && <div><LoginForm />Hej</div>}</div>
       </div>
     )
   }
